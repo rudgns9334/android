@@ -1,18 +1,15 @@
-package com.example.test0503;
+package com.example.layout_1;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import static java.sql.Types.NULL;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,64 +18,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final DBHelper dbHelper = new DBHelper(getApplicationContext(), "Refrigerator.db", null, 1);
+        ActionBar ab = getSupportActionBar();
+        ImageButton imageButton = (ImageButton) findViewById(R.id.refrigerator);
+        imageButton.setOnClickListener(new View.OnClickListener() {
 
-        // 테이블에 있는 모든 데이터 출력
-        final TextView result = (TextView) findViewById(R.id.result);
-
-        final EditText etItem = (EditText) findViewById(R.id.item);
-
-        Button insert = (Button) findViewById(R.id.insert);
-        insert.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String item = etItem.getText().toString();
-                if(item.equals(""))
-                    Toast.makeText(MainActivity.this, "재료를 입력하세요 !", Toast.LENGTH_SHORT).show();
-                else if(dbHelper.isEqual(item) == true)
-                    Toast.makeText(MainActivity.this, "이미 냉장고 안에 있어요 !", Toast.LENGTH_SHORT).show();
-                else
-                    dbHelper.insert(item);
-                result.setText(dbHelper.getResult());
-                etItem.setText(null);
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), refrigerator.class);
+                startActivity(intent);
             }
         });
-
-
-        // DB에 있는 데이터 삭제
-        Button delete = (Button) findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String item = etItem.getText().toString();
-
-                if (dbHelper.isEqual(item) == false)
-                    Toast.makeText(MainActivity.this, "방금 입력한 재료는 없어요 !", Toast.LENGTH_SHORT).show();
-                else
-                    dbHelper.delete(item);
-
-                result.setText(dbHelper.getResult());
-                etItem.setText(null);
-            }
-        });
-
-        // DB에 있는 데이터 조회
-        Button select = (Button) findViewById(R.id.select);
-        select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                result.setText(dbHelper.getResult());
-            }
-        });
-
-        Button clean = (Button) findViewById(R.id.clean);
-        clean.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                String all = "ALL";
-                dbHelper.delete("ALL");
-                result.setText(dbHelper.getResult());
-            }
-        });
-
     }
 }
