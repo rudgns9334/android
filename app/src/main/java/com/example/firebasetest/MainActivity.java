@@ -8,9 +8,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import static com.example.firebasetest.SubActivity.calledAlready;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,11 +39,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final DBHelper dbHelper = new DBHelper(getApplicationContext(), "Refrigerator.db", null, 1);
+        final DBHelper2 dbHelper2 = new DBHelper2(getApplicationContext(), "Recommend.db", null, 1);
 
         // 테이블에 있는 모든 데이터 출력
         final TextView result = (TextView) findViewById(R.id.result);
 
         final EditText etItem = (EditText) findViewById(R.id.item);
+
+        if (!calledAlready) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        final DatabaseReference dbR = db.getReference();
 
         Button insert = (Button) findViewById(R.id.insert);
         insert.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +63,20 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "재료를 입력하세요 !", Toast.LENGTH_SHORT).show();
                 else if(dbHelper.isEqual(item) == true)
                     Toast.makeText(MainActivity.this, "이미 냉장고 안에 있어요 !", Toast.LENGTH_SHORT).show();
-                else
+                else {
                     dbHelper.insert(item);
+                    dbR.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
                 result.setText(dbHelper.getResult());
                 etItem.setText(null);
             }
