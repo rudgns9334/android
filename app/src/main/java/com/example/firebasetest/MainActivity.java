@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.example.firebasetest.SubActivity.calledAlready;
@@ -65,10 +66,34 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "이미 냉장고 안에 있어요 !", Toast.LENGTH_SHORT).show();
                 else {
                     dbHelper.insert(item);
-                    dbR.addValueEventListener(new ValueEventListener() {
+                    Query mitem = dbR.child("material").child("data").orderByChild("IRDNT_NM").equalTo(item);
+                    mitem.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot mquery: dataSnapshot.getChildren()){
+                                final Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
+                                if(dbHelper2.isEqual(R_id))
+                                    dbHelper2.cntup(R_id);
+                                else{
+                                    Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
+                                    recipy.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for(DataSnapshot data : dataSnapshot.getChildren()) {
+                                                Integer mcount = data.child("MATERIAL_CNT").getValue(Integer.class);
+                                                dbHelper2.insert(R_id, mcount);
+                                                //System.out.println(data.child("MATERIAL_CNT").getValue(Integer.class));
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    dbHelper2.cntup(R_id);
+                                }
+                            }
                         }
 
                         @Override

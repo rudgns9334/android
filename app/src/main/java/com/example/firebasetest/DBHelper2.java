@@ -41,7 +41,7 @@ public class DBHelper2 extends SQLiteOpenHelper {
         if(R_id == 0){
             db.execSQL("DELETE FROM Recommend;");
         }
-        db.execSQL("DELETE FROM Recommend WHERE R_id = '" + R_id + "';");
+        db.execSQL("DELETE FROM Recommend WHERE R_id = " + R_id + ";");
         db.close();
     }
 
@@ -72,16 +72,16 @@ public class DBHelper2 extends SQLiteOpenHelper {
         return result;
     }*/
 
-    /*public boolean isEqual(String item){
+    public boolean isEqual(int R_id){
         boolean isExist = false;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Refrigerator", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
         while (cursor.moveToNext()) {
-            if(cursor.getString(1).equals(item) == true) {
+            if(cursor.getInt(0) == R_id) {
                 isExist = true;
                 break;
             }
         }
         return isExist;
-    }*/
+    }
 }
