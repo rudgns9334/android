@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,21 +7,46 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/refrigerator"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="320dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/ic_refrigerator" />
-
-    <ImageButton
         android:id="@+id/induction"
 
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="147dp"
+        android:layout_height="147dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
         android:background="@drawable/ic_induction" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/induction"
+        android:layout_centerHorizontal = "true"
+        android:textSize="40sp"
+        android:textColor="#FF9800"
+        android:id="@+id/search"
+        android:fontFamily="@font/eun"
+        android:text="요리찾기" />
+
+    <ImageButton
+        android:id="@+id/refrigerator"
+        android:layout_width="174dp"
+        android:layout_height="181dp"
+        android:layout_below="@+id/search"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:background="@drawable/ic_refrigerator" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/refrigerator"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginTop="10dp"
+
+        android:textSize="40sp"
+        android:textColor="#FF9800"
+        android:id="@+id/input"
+        android:fontFamily="@font/eun"
+        android:text="재료넣기" />
 
 
 </RelativeLayout>
