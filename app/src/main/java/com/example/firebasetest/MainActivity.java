@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                                 System.out.println("R_id: "+R_id);
                                 if(dbHelper2.isEqual(R_id)) {
                                     dbHelper2.cntup(R_id);
-                                    //dbHelper2.update_flag(R_id);
                                 }
                                 else{
                                     Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                                                 Integer mcount = data.child("MATERIAL_CNT").getValue(Integer.class);
                                                 dbHelper2.insert(R_id, mcount);
                                                 dbHelper2.cntup(R_id);
-                                                //System.out.println(data.child("RECIPE_ID").getValue(Integer.class));
                                             }
                                         }
 
@@ -84,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    //dbHelper2.update_flag(R_id);
                                 }
                             }
                         }

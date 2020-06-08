@@ -27,7 +27,6 @@ public class DBHelper2 extends SQLiteOpenHelper {
     }
 
     public void insert(int R_id, int mcount) {
-        System.out.println("R: "+R_id);
         // 읽고 쓰기가 가능하게 DB 열기
         SQLiteDatabase db = getWritableDatabase();
         // DB에 입력한 값으로 행 추가
@@ -47,9 +46,12 @@ public class DBHelper2 extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void update_flag(int R_id){
+    public void update_flag(int R_id, int tf){
         SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("UPDATE Recommend SET flag=1 WHERE R_id=" + R_id+";");
+        if(tf == 1)
+            db.execSQL("UPDATE Recommend SET flag=1 WHERE R_id=" + R_id+";");
+        else
+            db.execSQL("UPDATE Recommend SET flag=0 WHERE R_id=" + R_id+";");
         db.close();
     }
 
@@ -63,7 +65,25 @@ public class DBHelper2 extends SQLiteOpenHelper {
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
                 if((int)((float)scount/mcount*100) >= 80)
-                    update_flag(R_id);
+                    update_flag(R_id, 1);
+            }
+        }
+        db.close();
+    }
+
+    public void cntdown(int R_id){
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL("UPDATE Recommend SET scount=scount-1 WHERE R_id=" + R_id+";");
+        Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
+        int mcount,scount=0;
+        while (cursor.moveToNext()) {
+            if(cursor.getInt(0)==R_id){
+                mcount = cursor.getInt(1);
+                scount = cursor.getInt(2);
+                if((int)((float)scount/mcount*100) < 80)
+                    update_flag(R_id, 0);
+                if(cursor.getInt(2) == 0)
+                    delete(R_id);
             }
         }
         db.close();
