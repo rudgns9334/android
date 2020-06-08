@@ -30,14 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("나의 냉장고 !");
-        btn =(Button) findViewById(R.id.see);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SubActivity.class);
-                startActivity(intent);
-            }
-        });
 
         final DBHelper dbHelper = new DBHelper(getApplicationContext(), "Refrigerator.db", null, 1);
         final DBHelper2 dbHelper2 = new DBHelper2(getApplicationContext(), "Recommend.db", null, 1);
