@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().setTitle("나의 냉장고 !");
         btn =(Button) findViewById(R.id.see);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +72,11 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot mquery: dataSnapshot.getChildren()){
                                 final Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
-                                if(dbHelper2.isEqual(R_id))
+                                System.out.println("R_id: "+R_id);
+                                if(dbHelper2.isEqual(R_id)) {
                                     dbHelper2.cntup(R_id);
+                                    //dbHelper2.update_flag(R_id);
+                                }
                                 else{
                                     Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
                                     recipy.addValueEventListener(new ValueEventListener() {
@@ -82,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                                             for(DataSnapshot data : dataSnapshot.getChildren()) {
                                                 Integer mcount = data.child("MATERIAL_CNT").getValue(Integer.class);
                                                 dbHelper2.insert(R_id, mcount);
-                                                //System.out.println(data.child("MATERIAL_CNT").getValue(Integer.class));
+                                                dbHelper2.cntup(R_id);
+                                                //System.out.println(data.child("RECIPE_ID").getValue(Integer.class));
                                             }
                                         }
 
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    dbHelper2.cntup(R_id);
+                                    //dbHelper2.update_flag(R_id);
                                 }
                             }
                         }
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-                result.setText(dbHelper.getResult());
+                result.setText(dbHelper.getResult()+dbHelper2.getResult());
                 etItem.setText(null);
             }
         });
@@ -120,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 else
                     dbHelper.delete(item);
 
-                result.setText(dbHelper.getResult());
+                result.setText(dbHelper.getResult()+dbHelper2.getResult());
                 etItem.setText(null);
             }
         });
@@ -130,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.setText(dbHelper.getResult());
+                result.setText(dbHelper.getResult()+dbHelper2.getResult());
             }
         });
 
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 String all = "ALL";
                 dbHelper.delete("ALL");
-                result.setText(dbHelper.getResult());
+                result.setText(dbHelper.getResult()+dbHelper2.getResult());
             }
         });
 
