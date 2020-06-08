@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot mquery: dataSnapshot.getChildren()){
                                 final Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
-                                System.out.println("R_id: "+R_id);
                                 if(dbHelper2.isEqual(R_id)) {
                                     dbHelper2.cntup(R_id);
                                 }
@@ -107,8 +106,24 @@ public class MainActivity extends AppCompatActivity {
 
                 if (dbHelper.isEqual(item) == false)
                     Toast.makeText(MainActivity.this, "방금 입력한 재료는 없어요 !", Toast.LENGTH_SHORT).show();
-                else
+                else {
                     dbHelper.delete(item);
+                    Query mitem = dbR.child("material").child("data").orderByChild("IRDNT_NM").equalTo(item);
+                    mitem.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot mquery: dataSnapshot.getChildren()){
+                                Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
+                                dbHelper2.cntdown(R_id);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
 
                 result.setText(dbHelper.getResult()+dbHelper2.getResult());
                 etItem.setText(null);
