@@ -22,9 +22,6 @@ import static com.example.firebasetest.SubActivity.calledAlready;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    public Button btn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -64,10 +61,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot mquery: dataSnapshot.getChildren()){
                                 final Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
-                                System.out.println("R_id: "+R_id);
                                 if(dbHelper2.isEqual(R_id)) {
                                     dbHelper2.cntup(R_id);
-                                    //dbHelper2.update_flag(R_id);
                                 }
                                 else{
                                     Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
@@ -78,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                                                 Integer mcount = data.child("MATERIAL_CNT").getValue(Integer.class);
                                                 dbHelper2.insert(R_id, mcount);
                                                 dbHelper2.cntup(R_id);
-                                                //System.out.println(data.child("RECIPE_ID").getValue(Integer.class));
                                             }
                                         }
 
@@ -87,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    //dbHelper2.update_flag(R_id);
                                 }
                             }
                         }
@@ -113,8 +106,24 @@ public class MainActivity extends AppCompatActivity {
 
                 if (dbHelper.isEqual(item) == false)
                     Toast.makeText(MainActivity.this, "방금 입력한 재료는 없어요 !", Toast.LENGTH_SHORT).show();
-                else
+                else {
                     dbHelper.delete(item);
+                    Query mitem = dbR.child("material").child("data").orderByChild("IRDNT_NM").equalTo(item);
+                    mitem.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot mquery: dataSnapshot.getChildren()){
+                                Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
+                                dbHelper2.cntdown(R_id);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
 
                 result.setText(dbHelper.getResult()+dbHelper2.getResult());
                 etItem.setText(null);

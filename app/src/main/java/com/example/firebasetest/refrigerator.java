@@ -31,6 +31,15 @@ public class refrigerator extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ImageButton RecommendButton = (ImageButton) findViewById(R.id.induction);
+        RecommendButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RecommendList.class);
+                startActivity(intent);
+            }
+        });
         getSupportActionBar().setTitle("요리킹 조리킹 !");
     }
 }
