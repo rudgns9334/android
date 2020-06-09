@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends BaseAdapter {
@@ -45,9 +47,18 @@ public class MyAdapter extends BaseAdapter {
         TextView name = (TextView)view.findViewById(R.id.name);
         TextView material = (TextView)view.findViewById(R.id.material);
 
-        image.setImageResource(Data.get(position).getImage());
+        Glide.with(view).load(Data.get(position).getImage()).into(image);
         name.setText(Data.get(position).getName());
-        material.setText(Data.get(position).getMaterial());
+        String material_list ="";
+        int i= 1;
+        int len = Data.get(position).getMaterial().size();
+        for(String e: Data.get(position).getMaterial()){
+            material_list += e;
+            if(i < len)
+                material_list += ",";
+            i++;
+        }
+        material.setText(material_list);
 
         return view;
     }

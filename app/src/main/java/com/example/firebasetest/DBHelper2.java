@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHelper2 extends SQLiteOpenHelper {
 
     public DBHelper2(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -101,16 +103,16 @@ public class DBHelper2 extends SQLiteOpenHelper {
         }
         return result;
     }
-    public String getRecipy() {
+
+    public ArrayList<Integer> getR_id_list() {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
-        String result = "\n";
-
+        ArrayList<Integer> result = new ArrayList<Integer>();
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
         while (cursor.moveToNext()) {
             if(cursor.getInt(3) == 1)
-               result += cursor.getInt(0) + " "+ cursor.getInt(1) +" "+ cursor.getInt(2) + " "+ cursor.getInt(3) + "\n";
+                result.add(cursor.getInt(0));
         }
         return result;
     }

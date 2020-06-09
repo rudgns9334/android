@@ -3,19 +3,19 @@ package com.example.firebasetest;
 import java.util.ArrayList;
 
 public class Data {
-    private int image;
+    private String image_url;
     private String name;
-    private String material;
+    private ArrayList<String> material;
 
-    public Data(int image, String name, String material){
-        this.image = image;
+    public Data(String image_url, String name, ArrayList<String> material){
+        this.image_url = image_url;
         this.name = name;
         this.material = material;
     }
 
-    public int getImage()
+    public String getImage()
     {
-        return this.image;
+        return this.image_url;
     }
 
     public String getName()
@@ -23,7 +23,7 @@ public class Data {
         return this.name;
     }
 
-    public String getMaterial()
+    public ArrayList<String> getMaterial()
     {
         return this.material;
     }
