@@ -1,3 +1,4 @@
+
 package com.example.firebasetest;
 
 import android.content.Intent;
@@ -32,8 +33,8 @@ public class SubActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub);
-
+        //setContentView(R.layout.activity_sub);
+/*
         bts = (Button) findViewById(R.id.back);
         bts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,12 +42,12 @@ public class SubActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+*/
         if (!calledAlready) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
         }
-
+    /*
         listview = (ListView) findViewById(R.id.list);
 
         adapter = new ArrayAdapter<String>(this, R.layout.activity_list, mat);
@@ -114,7 +115,7 @@ public class SubActivity extends AppCompatActivity {
                     mat_count.put("RECIPE_ID",k);
                     mat_count.put("RN",m);
                     mat_count.put("MATERIAL_CNT",m_count);
-*/
+
 
                     //mat_count.put("MATERIAL_CNT",m_count);
                     //re.getRef().setValue(mat_count);
@@ -129,6 +130,6 @@ public class SubActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 }

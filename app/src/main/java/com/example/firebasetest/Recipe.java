@@ -1,41 +1,42 @@
 package com.example.firebasetest;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.example.firebasetest.SubActivity.calledAlready;
 
 public class Recipe extends AppCompatActivity{
 
-    List cook_dc = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_test);
+        setContentView(R.layout.recipe);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        LayoutInflater inflater =  LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.actionbartitle, null);
+        ((TextView)v.findViewById(R.id.title)).setText("요리 레시피 !");
+        getSupportActionBar().setCustomView(v);
 
-        TextView name = (TextView) findViewById(R.id.name);
-        TextView cooking = (TextView) findViewById(R.id.cooking);
+        TextView name = findViewById(R.id.name);
+        TextView material = findViewById(R.id.material);
+        TextView cooking = findViewById(R.id.cooking);
         ImageView image = findViewById(R.id.image);
 
-        Intent intent = getIntent();
-        int R_id = Integer.parseInt(intent.getStringExtra("R_id"));
-        RecipeComponent recipecomponent = (RecipeComponent)intent.getSerializableExtra("class");
+
+        String rname = getIntent().getStringExtra("name");
+        String image_url = getIntent().getStringExtra("image_url");
+        String rmaterial = getIntent().getStringExtra("material");
+        String rcooking = getIntent().getStringExtra("cooking");
 
         if (!calledAlready) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -46,23 +47,20 @@ public class Recipe extends AppCompatActivity{
         final DatabaseReference dbR = db.getReference();
 
 
-        Query recipe = dbR.child("cooking").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
-        recipe.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot order: dataSnapshot.getChildren()){
-                    String cook_order = order.child("COOKING_DC").getValue(String.class);
-                    cook_dc.add(cook_order);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        Glide.with(this).load(image_url).into(image);
+        name.setText(rname);
+        material.setText(rmaterial);
+        cooking.setText(rcooking);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
             }
-        });
-        Glide.with(this).load(recipecomponent.url_image).into(image);
-        name.setText(recipecomponent.name);
-        cooking.setText((CharSequence) cook_dc);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

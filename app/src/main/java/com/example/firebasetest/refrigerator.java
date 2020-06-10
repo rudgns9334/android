@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,7 +24,7 @@ public class refrigerator extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
 
-        ImageButton imageButton = (ImageButton) findViewById(R.id.refrigerator);
+        ImageButton imageButton = findViewById(R.id.refrigerator);
         imageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -31,7 +33,7 @@ public class refrigerator extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ImageButton RecommendButton = (ImageButton) findViewById(R.id.induction);
+        ImageButton RecommendButton = findViewById(R.id.induction);
         RecommendButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -40,6 +42,22 @@ public class refrigerator extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        getSupportActionBar().setTitle("요리킹 조리킹 !");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        LayoutInflater inflater =  LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.actionbartitle, null);
+        ((TextView)v.findViewById(R.id.title)).setText("요리킹 조리킹 !");
+        getSupportActionBar().setCustomView(v);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
