@@ -82,9 +82,58 @@ public class RecommendList extends AppCompatActivity {
                     cooking = "";
                     for(DataSnapshot order: dataSnapshot.getChildren()){
                         String cook_order = order.child("COOKING_DC").getValue(String.class);
-                        //Integer cook_num = order.child("COOKING_NO").getValue(Integer.class);
+                        Integer cook_num = order.child("COOKING_NO").getValue(Integer.class);
+                        String num = "";
                         //System.out.println(cook_num);
-                        cooking += "* " + cook_order + "\n";
+                        switch(cook_num){
+                            case 1:
+                                num = "①";
+                                break;
+                            case 2:
+                                num = "②";
+                                break;
+                            case 3:
+                                num = "③";
+                                break;
+                            case 4:
+                                num = "④";
+                                break;
+                            case 5:
+                                num = "⑤";
+                                break;
+                            case 6:
+                                num = "⑥";
+                                break;
+                            case 7:
+                                num = "⑦";
+                                break;
+                            case 8:
+                                num = "⑧";
+                                break;
+                            case 9:
+                                num = "⑨";
+                                break;
+                            case 10:
+                                num = "⑩";
+                                break;
+                            case 11:
+                                num = "⑪";
+                                break;
+                            case 12:
+                                num = "⑫";
+                                break;
+                            case 13:
+                                num = "⑬";
+                                break;
+                            case 14:
+                                num = "⑭";
+                                break;
+                            case 15:
+                                num = "⑮";
+                                break;
+                        }
+
+                        cooking += num + " " + cook_order + "\n";
                     }
                 }
 
@@ -103,6 +152,7 @@ public class RecommendList extends AppCompatActivity {
                         material_list += a + ",";
                     }
                     material_list = material_list.substring(0,material_list.length()-1);
+                    System.out.println(image_url);
                     Data_list.add(new Data(image_url, name, material_list, cooking));
 
                 }

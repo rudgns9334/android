@@ -50,6 +50,7 @@ public class MyAdapter extends BaseAdapter {
         image = view.findViewById(R.id.image);
         name = view.findViewById(R.id.name);
         material = view.findViewById(R.id.material);
+        System.out.println(Data.get(position).getImage());
         Glide.with(view).load(Data.get(position).getImage()).into(image);
         name.setText(Data.get(position).getName());
         material.setText(Data.get(position).getMaterial());

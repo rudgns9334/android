@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.setText(dbHelper.getResult());
+                result.setText(dbHelper.getResult()+dbHelper2.getResult());
             }
         });
 
@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 String all = "ALL";
                 dbHelper.delete("ALL");
+                dbHelper2.delete(0);
                 result.setText(dbHelper.getResult());
             }
         });

@@ -66,7 +66,7 @@ public class DBHelper2 extends SQLiteOpenHelper {
             if(cursor.getInt(0)==R_id){
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
-                if((int)((float)scount/mcount*100) >= 80)
+                if((int)((float)scount/mcount*100) >= 65)
                     update_flag(R_id, 1);
             }
         }
@@ -82,7 +82,7 @@ public class DBHelper2 extends SQLiteOpenHelper {
             if(cursor.getInt(0)==R_id){
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
-                if((int)((float)scount/mcount*100) < 80)
+                if((int)((float)scount/mcount*100) < 65)
                     update_flag(R_id, 0);
                 if(cursor.getInt(2) == 0)
                     delete(R_id);
@@ -99,7 +99,8 @@ public class DBHelper2 extends SQLiteOpenHelper {
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
         while (cursor.moveToNext()) {
-            result += cursor.getInt(0) + " "+ cursor.getInt(1) +" "+ cursor.getInt(2) + " "+ cursor.getInt(3) + "\n";
+            //if(cursor.getInt(3)==1)
+            result += cursor.getInt(0) + " "+ cursor.getInt(1) +" "+ cursor.getInt(2) + "\n";
         }
         return result;
     }
