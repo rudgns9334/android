@@ -39,6 +39,8 @@
             android:layout_weight="1"
             android:textSize="28sp"
             android:fontFamily="@font/eun"
+            android:background="@drawable/color_change"
+            android:stateListAnimator="@null"
             android:text="@string/myref_add" />
 
         <Button
@@ -48,17 +50,9 @@
             android:layout_weight="1"
             android:textSize="28sp"
             android:fontFamily="@font/eun"
+            android:background="@drawable/color_change"
+            android:stateListAnimator="@null"
             android:text="@string/myref_delete" />
-
-
-        <Button
-            android:id="@+id/select"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="28sp"
-            android:fontFamily="@font/eun"
-            android:text="@string/myref_lookup" />
 
 
     </LinearLayout>
@@ -74,14 +68,13 @@
             android:fillViewport = "true"
             android:layout_marginTop="16dp">
 
-            <TextView
-                android:id="@+id/result"
+            <ListView
+                android:id="@+id/listview_ref"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:fontFamily="@font/eun"
-                android:textSize="28sp" />
-
+                android:choiceMode="multipleChoice"
+                android:textColor ="@android:color/black"/>
 
         </ScrollView>
 
@@ -90,6 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/eun"
+            android:background="@drawable/color_change"
+            android:stateListAnimator="@null"
             android:text="@string/myref_delall"
             android:textSize="28dp" />
     </LinearLayout>

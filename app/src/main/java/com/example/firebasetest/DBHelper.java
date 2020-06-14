@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     // DBHelper 생성자로 관리할 DB 이름과 버전 정보를 받음
@@ -46,17 +48,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public String getResult() {
+    public void getResult(ArrayList<String> items) {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
-        String result = "";
-
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         Cursor cursor = db.rawQuery("SELECT * FROM Refrigerator", null);
         while (cursor.moveToNext()) {
-            result += cursor.getString(1) + "\n";
+             items.add(cursor.getString(1));
         }
-        return result;
     }
 
     public boolean isEqual(String item){
