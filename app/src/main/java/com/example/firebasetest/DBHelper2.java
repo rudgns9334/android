@@ -105,6 +105,7 @@ public class DBHelper2 extends SQLiteOpenHelper {
         return result;
     }
 
+
     public ArrayList<Integer> getR_id_list() {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();

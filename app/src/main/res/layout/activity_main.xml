@@ -18,13 +18,17 @@
             android:fontFamily="@font/eun"
             android:text="@string/myref_material" />
 
+        <AutoCompleteTextView android:id="@+id/item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+        <!--
         <EditText
             android:id="@+id/item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="2sp"
 
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp" />-->
     </LinearLayout>
 
     <LinearLayout
