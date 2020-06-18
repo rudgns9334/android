@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 
 import static com.example.firebasetest.SubActivity.calledAlready;
 
-public class RecommendList extends AppCompatActivity {
+public class RecommendList extends BaseActivity {
     String name;
     String image_url;
     String material_list;
@@ -33,8 +32,11 @@ public class RecommendList extends AppCompatActivity {
     DBHelper2 dbHelper2;
     FirebaseDatabase db;
     DatabaseReference dbR;
+    MyAdapter myAdapter;
     ArrayList<Integer> R_id_list;
     Button go;
+    ListView listView;
+    int i = 0;
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
@@ -46,7 +48,9 @@ public class RecommendList extends AppCompatActivity {
         View v = inflater.inflate(R.layout.actionbartitle, null);
         ((TextView)v.findViewById(R.id.title)).setText("추천 레시피 !");
         getSupportActionBar().setCustomView(v);
-
+        listView = findViewById(R.id.listView);
+        myAdapter = new MyAdapter(RecommendList.this, Data_list);
+        listView.setAdapter(myAdapter);
         dbHelper2 = new DBHelper2(getApplicationContext(), "Recommend.db", null, 1);
 
         if (!calledAlready) {
@@ -56,136 +60,29 @@ public class RecommendList extends AppCompatActivity {
 
         db = FirebaseDatabase.getInstance();
         dbR = db.getReference();
-        R_id_list = dbHelper2.getR_id_list();
-        for(Integer R_id:R_id_list) {
-            Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
-            final Query material = dbR.child("material").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
-            recipy.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot data : dataSnapshot.getChildren()) {
-                        name = data.child("RECIPE_NM_KO").getValue(String.class);
-                        image_url = data.child("IMG_URL").getValue(String.class);
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            Query recipe = dbR.child("cooking").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
-            recipe.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    cooking = "";
-                    for(DataSnapshot order: dataSnapshot.getChildren()){
-                        String cook_order = order.child("COOKING_DC").getValue(String.class);
-                        Integer cook_num = order.child("COOKING_NO").getValue(Integer.class);
-                        String num = "";
-                        //System.out.println(cook_num);
-                        switch(cook_num){
-                            case 1:
-                                num = "①";
-                                break;
-                            case 2:
-                                num = "②";
-                                break;
-                            case 3:
-                                num = "③";
-                                break;
-                            case 4:
-                                num = "④";
-                                break;
-                            case 5:
-                                num = "⑤";
-                                break;
-                            case 6:
-                                num = "⑥";
-                                break;
-                            case 7:
-                                num = "⑦";
-                                break;
-                            case 8:
-                                num = "⑧";
-                                break;
-                            case 9:
-                                num = "⑨";
-                                break;
-                            case 10:
-                                num = "⑩";
-                                break;
-                            case 11:
-                                num = "⑪";
-                                break;
-                            case 12:
-                                num = "⑫";
-                                break;
-                            case 13:
-                                num = "⑬";
-                                break;
-                            case 14:
-                                num = "⑭";
-                                break;
-                            case 15:
-                                num = "⑮";
-                                break;
-                        }
-
-                        cooking += num + " " + cook_order + "\n";
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            material.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    material_list = "";
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        String a = data.child("IRDNT_NM").getValue(String.class);
-                        material_list += a + ",";
-                    }
-                    material_list = material_list.substring(0,material_list.length()-1);
-                    System.out.println(image_url);
-                    Data_list.add(new Data(image_url, name, material_list, cooking));
-
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-            go = findViewById(R.id.go);
-            go.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    ListView listView = findViewById(R.id.listView);
-                    final MyAdapter myAdapter = new MyAdapter(RecommendList.this, Data_list);
-                    listView.setAdapter(myAdapter);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView parent, View v, int position, long id) {
-                            Intent intent = new Intent(getApplicationContext(), Recipe.class);
-                            Data data = myAdapter.getItem(position);
-                            intent.putExtra("name", data.getName());
-                            intent.putExtra("image_url", data.getImage());
-                            intent.putExtra("material", data.getMaterial());
-                            intent.putExtra("cooking", data.getCooking());
-                            startActivity(intent);
-                        }
-                    });
-                go.setVisibility(View.GONE);
-                }
-
-            });
+        progressON("Loading...");
+        A thread = new A();
+        thread.start();
+        synchronized (thread){
+            try {
+                thread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), Recipe.class);
+                Data data = myAdapter.getItem(position);
+                intent.putExtra("name", data.getName());
+                intent.putExtra("image_url", data.getImage());
+                intent.putExtra("material", data.getMaterial());
+                intent.putExtra("cooking", data.getCooking());
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -196,5 +93,122 @@ public class RecommendList extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+    class A extends Thread{
+
+        @Override
+        public void run() {
+            synchronized (this) {
+                R_id_list = dbHelper2.getR_id_list();
+                i = 0;
+                for (Integer R_id : R_id_list) {
+                    Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
+                    final Query material = dbR.child("material").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
+                    recipy.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                name = data.child("RECIPE_NM_KO").getValue(String.class);
+                                image_url = data.child("IMG_URL").getValue(String.class);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    Query recipe = dbR.child("cooking").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
+                    recipe.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            cooking = "";
+                            for (DataSnapshot order : dataSnapshot.getChildren()) {
+                                String cook_order = order.child("COOKING_DC").getValue(String.class);
+                                Integer cook_num = order.child("COOKING_NO").getValue(Integer.class);
+                                String num = "";
+                                switch (cook_num) {
+                                    case 1:
+                                        num = "①";
+                                        break;
+                                    case 2:
+                                        num = "②";
+                                        break;
+                                    case 3:
+                                        num = "③";
+                                        break;
+                                    case 4:
+                                        num = "④";
+                                        break;
+                                    case 5:
+                                        num = "⑤";
+                                        break;
+                                    case 6:
+                                        num = "⑥";
+                                        break;
+                                    case 7:
+                                        num = "⑦";
+                                        break;
+                                    case 8:
+                                        num = "⑧";
+                                        break;
+                                    case 9:
+                                        num = "⑨";
+                                        break;
+                                    case 10:
+                                        num = "⑩";
+                                        break;
+                                    case 11:
+                                        num = "⑪";
+                                        break;
+                                    case 12:
+                                        num = "⑫";
+                                        break;
+                                    case 13:
+                                        num = "⑬";
+                                        break;
+                                    case 14:
+                                        num = "⑭";
+                                        break;
+                                    case 15:
+                                        num = "⑮";
+                                        break;
+                                }
+
+                                cooking += num + " " + cook_order + "\n";
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    material.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            material_list = "";
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                String a = data.child("IRDNT_NM").getValue(String.class);
+                                material_list += a + ",";
+                            }
+                            material_list = material_list.substring(0, material_list.length() - 1);
+                            Data_list.add(new Data(image_url, name, material_list, cooking));
+                            myAdapter.notifyDataSetChanged();
+                            i++;
+                            if(R_id_list.size() == i)
+                                progressOFF();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                notify();
+            }
+        }
     }
 }
