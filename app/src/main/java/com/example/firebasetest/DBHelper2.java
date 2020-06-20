@@ -66,7 +66,7 @@ public class DBHelper2 extends SQLiteOpenHelper {
             if(cursor.getInt(0)==R_id){
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
-                if((int)((float)scount/mcount*100) >= 65)
+                if((int)((float)scount/mcount*100) >= 60)
                     update_flag(R_id, 1);
             }
         }
@@ -82,7 +82,7 @@ public class DBHelper2 extends SQLiteOpenHelper {
             if(cursor.getInt(0)==R_id){
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
-                if((int)((float)scount/mcount*100) < 65)
+                if((int)((float)scount/mcount*100) < 60)
                     update_flag(R_id, 0);
                 if(cursor.getInt(2) == 0)
                     delete(R_id);
