@@ -42,6 +42,15 @@ public class refrigerator extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ImageButton ShareButton = findViewById(R.id.insta);
+        ShareButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(refrigerator.this, NaviActivity.class);
+                startActivity(intent);
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

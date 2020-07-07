@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/search"
+        android:enabled="true"
+        android:icon="@drawable/search"
+        android:title="Search"/>
+
+    <item
+        android:id="@+id/plus"
+        android:enabled="true"
+        android:icon="@drawable/plus"
+        android:title="Upload"/>
+
+    <item
+        android:id="@+id/star"
+        android:enabled="true"
+        android:icon="@drawable/star"
+        android:title="Scrap"/>
+
+    <item
+        android:id="@+id/user"
+        android:enabled="true"
+        android:icon="@drawable/person"
+        android:title="User"/>
+</menu>

@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="609dp">
+        android:layout_height="521dp">
 
         <ImageButton
             android:id="@+id/kitchen"
@@ -16,7 +16,7 @@
             android:layout_height="400dp"
             android:background="@drawable/kitchen"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="206dp" />
+            tools:layout_editor_absoluteY="119dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -30,7 +30,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
-
             android:background="@drawable/cooking" />
 
 
@@ -46,6 +45,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
             android:background="@drawable/share" />
 
         <TextView
@@ -53,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginLeft="20dp"
             android:layout_below="@id/refrigerator"
+            android:layout_marginLeft="20dp"
 
             android:fontFamily="@font/eun"
             android:text="@string/main_insert"
@@ -66,8 +66,8 @@
             android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/cooking"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/eun"
             android:text="@string/main_find"
             android:textColor="#FF9800"
@@ -77,9 +77,9 @@
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:layout_alignParentRight="true"
             android:layout_below="@id/cooking"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="45dp"
             android:fontFamily="@font/eun"
             android:text="공유하기"
             android:textColor="#FF9800"
