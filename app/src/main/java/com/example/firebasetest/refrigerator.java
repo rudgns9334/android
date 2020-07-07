@@ -33,7 +33,7 @@ public class refrigerator extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ImageButton RecommendButton = findViewById(R.id.induction);
+        ImageButton RecommendButton = findViewById(R.id.cooking);
         RecommendButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
