@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.firebasetest.SubActivity.calledAlready;
+import static com.example.firebasetest.RecommendList.calledAlready;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,16 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        LayoutInflater inflater =  LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.actionbartitle, null);
-        ((TextView)v.findViewById(R.id.title)).setText("나의 냉장고 !");
-        getSupportActionBar().setCustomView(v);
-
-
         AutoCompleteTextView autoComplete = (AutoCompleteTextView) findViewById(R.id.item);
 
         stringList.add("계란");
@@ -809,9 +799,9 @@ public class MainActivity extends AppCompatActivity {
         autoComplete.setAdapter(adapter2);
         System.out.print("1" + stringList);
         autoComplete.setThreshold(1);
-        listview = (ListView) this.findViewById(R.id.listview_ref) ;
+        listview = (ListView) this.findViewById(R.id.listview_ref);
         adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_multiple_choice, items) ;
-        listview.setAdapter(adapter) ;
+        listview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 //        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -956,5 +946,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
 

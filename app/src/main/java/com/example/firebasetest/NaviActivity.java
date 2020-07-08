@@ -24,12 +24,16 @@ public class NaviActivity extends AppCompatActivity {
     private Frag3 frag3;
     private Frag4 frag4;
     private Frag5 frag5;
-
+    Frag3 fragment3;
+    FragmentManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instagram);
+        manager = getSupportFragmentManager();
 
+        //프래그먼트메니져로 xml에 정의된 프래그먼트 찾기
+        //fragment3 =  (Frag3) manager.findFragmentById(R.id.fragment3);
         bottomNavigationView = findViewById(R.id.bottomNavi);
         frag1 = new Frag1();
         frag2 = new Frag2();

@@ -3,6 +3,7 @@ package com.example.firebasetest;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -51,13 +52,7 @@ public class refrigerator extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        LayoutInflater inflater =  LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.actionbartitle, null);
-        ((TextView)v.findViewById(R.id.title)).setText("요리킹 조리킹 !");
-        getSupportActionBar().setCustomView(v);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
