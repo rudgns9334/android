@@ -49,6 +49,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/share" />
 
+
         <TextView
             android:id="@+id/input"
             android:layout_width="wrap_content"

@@ -48,7 +48,7 @@ public class refrigerator extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(refrigerator.this, NaviActivity.class);
+                Intent intent = new Intent(refrigerator.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
