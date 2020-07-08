@@ -51,8 +51,6 @@ public class Frag3 extends Fragment implements View.OnClickListener {
 
         imageView = (ImageView) rootView.findViewById(R.id.picture);
 
-
-
         return rootView;
     }
 
