@@ -21,9 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.firebasetest.SubActivity.calledAlready;
 
 public class RecommendList extends BaseActivity {
+    static boolean calledAlready = false;
     String name;
     String image_url;
     String material_list;
@@ -41,13 +41,6 @@ public class RecommendList extends BaseActivity {
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.recommendlist);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        LayoutInflater inflater =  LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.actionbartitle, null);
-        ((TextView)v.findViewById(R.id.title)).setText("추천 레시피 !");
-        getSupportActionBar().setCustomView(v);
         listView = findViewById(R.id.listView);
         myAdapter = new MyAdapter(RecommendList.this, Data_list);
         listView.setAdapter(myAdapter);

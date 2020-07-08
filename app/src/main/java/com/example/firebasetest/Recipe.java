@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import static com.example.firebasetest.SubActivity.calledAlready;
+
+import static com.example.firebasetest.RecommendList.calledAlready;
 
 public class Recipe extends AppCompatActivity{
 
@@ -19,13 +20,6 @@ public class Recipe extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        LayoutInflater inflater =  LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.actionbartitle, null);
-        ((TextView)v.findViewById(R.id.title)).setText("요리 레시피 !");
-        getSupportActionBar().setCustomView(v);
 
         TextView name = findViewById(R.id.name);
         TextView material = findViewById(R.id.material);

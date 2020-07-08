@@ -79,7 +79,6 @@
                 android:layout_height="wrap_content"
                 android:choiceMode="multipleChoice"
                 android:textColor ="@android:color/black"/>
-
         </ScrollView>
 
         <Button
