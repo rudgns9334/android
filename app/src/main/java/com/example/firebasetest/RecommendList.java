@@ -2,6 +2,7 @@ package com.example.firebasetest;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -61,7 +62,7 @@ public class RecommendList extends BaseActivity {
         db = FirebaseDatabase.getInstance();
         dbR = db.getReference();
 
-        progressON("Loading...");
+        progressON("요리중...");
         A thread = new A();
         thread.start();
         synchronized (thread){

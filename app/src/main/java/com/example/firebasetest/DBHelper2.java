@@ -57,32 +57,40 @@ public class DBHelper2 extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void cntup(int R_id){
+    public void cntup(int R_id,String TY){
         SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("UPDATE Recommend SET scount=scount+1 WHERE R_id=" + R_id+";");
+        int i = 1;
+        if(TY.equals("주재료"))
+            i = 3;
+        db.execSQL("UPDATE Recommend SET scount=scount+"+i+" WHERE R_id=" + R_id+";");
         Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
         int mcount,scount=0;
         while (cursor.moveToNext()) {
             if(cursor.getInt(0)==R_id){
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
-                if((int)((float)scount/mcount*100) >= 60)
+                System.out.println(scount);
+                if((int)((float)scount/mcount*100) >= 70)
                     update_flag(R_id, 1);
             }
         }
         db.close();
     }
 
-    public void cntdown(int R_id){
+    public void cntdown(int R_id,String TY){
         SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("UPDATE Recommend SET scount=scount-1 WHERE R_id=" + R_id+";");
+        int i = 1;
+        if(TY.equals("주재료"))
+            i = 3;
+        db.execSQL("UPDATE Recommend SET scount=scount-"+i+" WHERE R_id=" + R_id+";");
         Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
         int mcount,scount=0;
         while (cursor.moveToNext()) {
             if(cursor.getInt(0)==R_id){
                 mcount = cursor.getInt(1);
                 scount = cursor.getInt(2);
-                if((int)((float)scount/mcount*100) < 60)
+                System.out.println(scount);
+                if((int)((float)scount/mcount*100) < 70)
                     update_flag(R_id, 0);
                 if(cursor.getInt(2) == 0)
                     delete(R_id);
@@ -117,6 +125,16 @@ public class DBHelper2 extends SQLiteOpenHelper {
                 result.add(cursor.getInt(0));
         }
         return result;
+    }
+    public Integer rcnt(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Recommend", null);
+        int cnt = 0;
+        while (cursor.moveToNext()) {
+            if(cursor.getInt(3) == 1)
+                cnt ++;
+        }
+        return cnt;
     }
 
     public boolean isEqual(int R_id){
