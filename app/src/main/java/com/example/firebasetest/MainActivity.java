@@ -843,8 +843,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot mquery: dataSnapshot.getChildren()){
                                 final Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
+                                final String TY = mquery.child("IRDNT_TY_NM").getValue(String.class);
                                 if(dbHelper2.isEqual(R_id)) {
-                                    dbHelper2.cntup(R_id);
+                                    dbHelper2.cntup(R_id,TY);
                                 }
                                 else{
                                     Query recipy = dbR.child("recipy").child("data").orderByChild("RECIPE_ID").equalTo(R_id);
@@ -854,7 +855,7 @@ public class MainActivity extends AppCompatActivity {
                                             for(DataSnapshot data : dataSnapshot.getChildren()) {
                                                 Integer mcount = data.child("MATERIAL_CNT").getValue(Integer.class);
                                                 dbHelper2.insert(R_id, mcount);
-                                                dbHelper2.cntup(R_id);
+                                                dbHelper2.cntup(R_id,TY);
                                             }
                                         }
                                         @Override
@@ -901,7 +902,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot mquery: dataSnapshot.getChildren()){
                                     Integer R_id = mquery.child("RECIPE_ID").getValue(Integer.class);
-                                    dbHelper2.cntdown(R_id);
+                                    String TY = mquery.child("IRDNT_TY_NM").getValue(String.class);
+                                    System.out.println(TY);
+                                    dbHelper2.cntdown(R_id,TY);
                                 }
                             }
 

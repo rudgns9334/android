@@ -9,7 +9,11 @@ public class Post {
     private String ingrd;
     private String cooking;
     private String qnt;
+<<<<<<< HEAD
     public Post(String iUID, Integer iPID, String ipost_name, Integer ipost_like, Integer ipost_star, String irecipe_name, String iingrd, String icooking, String iqnt){
+=======
+    public Post(String iUID,Integer iPID,String ipost_name,Integer ipost_like,Integer ipost_star,String irecipe_name,String iingrd,String icooking,String iqnt){
+>>>>>>> origin/master
         UID = iUID;
         PID = iPID;
         post_like = ipost_like;
